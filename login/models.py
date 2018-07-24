@@ -1,7 +1,6 @@
-from django.db import models
+from django import forms
 
 # Create your models here.
-class LoginInfo(models.Model):
-    nameField = models.CharField(max_length=16)
-    passwordField = models.CharField(max_length=256)
-
+class LoginInfo(forms.ModelForm):
+    nameField = forms.CharField(max_length=16)
+    passwordField = forms.CharField(widget=forms.PasswordInput)
