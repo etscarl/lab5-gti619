@@ -24,4 +24,3 @@ def signup(request):
 	else:
 		form = SignUpForm()	
 	return render(request, 'login/signup.html', {'form': form})
-	
