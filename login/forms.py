@@ -25,3 +25,8 @@ class SignUpForm(ModelForm):
 			'passwordField': 'Password',
 			'confirmPassword': 'Confirm password'
 		}
+		
+		widgets = {
+			'passwordField': forms.PasswordInput(),
+			'confirmPassword': forms.PasswordInput(),
+		}
