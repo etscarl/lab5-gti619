@@ -1,11 +1,13 @@
 from django.db import models
+from enum import Enum
+
+class Roles(Enum):	 # A subclass of Enum
+	ADMIN = "Administrateur"
+	CR = "Clients Résidentiels"
+	CA = "Clients D'affaire"
 
 # Create your models here.
-class LoginInfo(models.Model):
-    nameField = models.CharField(max_length=16)
-    passwordField = models.CharField(max_length=256)
-
-class SignUpInfo(models.Model):
-	nameField = models.CharField(max_length=16)
-	passwordField = models.CharField(max_length=256)
-	confirmPassword = models.CharField(max_length=256)
+class User(models.Model):
+	username = models.CharField(max_length=16)
+	password = models.CharField(max_length=256)
+	role = models.CharField(max_length=5,choices=[(tag, tag.value) for tag in Roles])
