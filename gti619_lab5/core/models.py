@@ -14,10 +14,23 @@ class Roles(Enum):	 # A subclass of Enum
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	email_confirmed = models.BooleanField(default=False)
-	role = models.CharField(max_length=5,choices=[(tag,tag.value) for tag in Roles], default=Roles.ADMIN)
+	role = models.CharField(max_length=5,choices=[(tag.value,tag.value) for tag in Roles])
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
+	if created:
+		Profile.objects.create(user=instance)		
+	instance.profile.save()
+
+class Config(models.Model):
+	isPeriodicChange = models.BooleanField(default=False)
+	pwdMinLength = models.PositiveIntegerField(default=8)
+	pwdMaxLength = models.PositiveIntegerField(blank=True, null=True)
+	mustHaveUppercase = models.BooleanField(default=False)
+	mustHaveLowercase = models.BooleanField(default=False)
+	mustHaveSpecialChar = models.BooleanField(default=False)
+	mustHaveNumericChar = models.BooleanField(default=False)
+	cannotUsePreviousPWD = models.BooleanField(default=False)
+	maxNumberAttemps = models.PositiveIntegerField(default=3)
+	delayBetweenAttemps = models.PositiveIntegerField(default=1)
+	contactAdminAfterFailure = models.BooleanField(default=False)

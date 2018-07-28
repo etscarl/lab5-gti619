@@ -7,8 +7,11 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 
-from gti619_lab5.core.forms import SignUpForm
+from gti619_lab5.core.forms import *
 from gti619_lab5.core.tokens import account_activation_token
+from gti619_lab5.core.models import *
+
+from django.views import generic
 
 @login_required
 def home(request):
@@ -20,6 +23,9 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
+            user.save()
+                        
+            user.profile.role = form.data['role']
             user.save()
 
             current_site = get_current_site(request)
@@ -57,3 +63,22 @@ def activate(request, uidb64, token):
         return redirect('home')
     else:
         return render(request, 'account_activation_invalid.html')
+
+@login_required
+def listeCR(request):
+    cr_list = User.objects.filter(profile__role=Roles.CR.value)
+    return render(request, 'listeCR.html', {'cr_user_list': cr_list})
+
+@login_required       
+def listeCA(request):
+    ca_list = User.objects.filter(profile__role=Roles.CA.value)
+    return render(request, 'listeCA.html', {'ca_user_list': ca_list})
+
+@login_required
+def settings(request):
+    if request.method == 'POST':
+        form = ConfigForm(request.POST)
+        print('SAVING CONFIG..............................')
+    else:
+        form = ConfigForm()
+    return render(request, 'settings.html', {'form': form})

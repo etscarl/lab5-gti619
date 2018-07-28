@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<h2>Liste de clients residentiels</h2>
+		<ul>
+			{% for user in cr_user_list %}
+				<li>{{ user.username }}</ul>			
+			{% endfor %}
+		</ul>
+	{% else %}
+		<h2>You must be logged in to view this list!</h2>
+		<p>Please log in or sign up.</p>
+	{% endif %}
+{% endblock %}

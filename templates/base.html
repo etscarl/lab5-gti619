@@ -2,13 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}Simple is Better Than Complex{% endblock %}</title>
+    <title>{% block title %}Lab 5{% endblock %}</title>
   </head>
   <body>
     <header>
       <h1>My Site</h1>
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">logout</a>
+		<a href="{% url 'home' %}">Home</a>
+		{% if user.profile.role == "Administrateur" %}
+			<a href="{% url 'settings' %}">Configuration</a>		
+		{% endif %}
+		
+		{% if user.profile.role == "Administrateur" or user.profile.role == "Clients Résidentiels" %}
+			<a href="{% url 'listeCR' %}">Clients Residentiels</a>		
+		{% endif %}
+		
+		{% if user.profile.role == "Administrateur" or user.profile.role == "Clients D'affaire" %}
+			<a href="{% url 'listeCA' %}">Clients D'affaire</a>		
+		{% endif %}
       {% else %}
         <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
       {% endif %}
