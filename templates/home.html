@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
+		<p>Your email has been confirmed</p>
+	{% else %}
+		<h2>Welcome, anonymous!</h2>
+		<p>Please log in or sign up.</p>
+	{% endif %}
+{% endblock %}
