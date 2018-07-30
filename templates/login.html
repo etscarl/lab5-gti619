@@ -20,7 +20,8 @@
         {% endif %}
       </p>
     {% endfor %}
-    <button type="submit">Log in</button>
-    <a href="{% url 'signup' %}">New to My Site? Sign up</a>
+    <button type="submit">Log in</button><br>
+    <a href="{% url 'signup' %}">New to My Site? Sign up</a><br>
+	<a href="{% url 'password_reset' %}">Forgot password</a>
   </form>
 {% endblock %}
